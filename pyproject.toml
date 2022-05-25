@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "minimax-tic-tac-toe"
+version = "1.0.0"
+description = "Solving tic tac toe with minimax."
+authors = ["LeeoSilva <leeosilva0909@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9.8"
+numpy = "^1.22.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+black = {version = "^22.3.0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry>=0.12"]
