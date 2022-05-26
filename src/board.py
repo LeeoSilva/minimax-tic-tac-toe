@@ -2,6 +2,9 @@ import numpy as np
 
 
 class Board:
+    state: np.ndarray
+    winner: str
+
     def __init__(self, state: list = np.full((3, 3), "_")) -> None:
         self.state = state
         self.winner = ""
@@ -27,8 +30,11 @@ class Board:
     def get_state(self):
         return self.state.tolist()
 
-    def render(self) -> None:
-        pass
+    def draw(self) -> None:
+        for row in self.state:
+            for item in row:
+                print(f"| {item} |", end=" ")
+            print("")
 
     def check_win(self) -> str:
         self.evaluate()
