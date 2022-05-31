@@ -6,15 +6,20 @@ from src.constants import Player, Result
 from abc import ABCMeta
 
 
-class BaseAI(ABCMeta):
+class BaseAI:
     board: Board
     player: Player
+
+    def __init__(self, board, player) -> None:
+        self.board = board
+        self.player = player
 
 
 class Minimax(BaseAI):
     def __init__(self, board, player) -> None:
-        self.board = board
-        self.player = player
+        super().__init__(board, player)
+
+    # TODO: FIX THIS.
 
     def make_best_move(self):
         bestScore = -inf
@@ -49,15 +54,7 @@ class Minimax(BaseAI):
 
             self.board.undo_move()
 
-            if self._we_are_losing(is_maximizer_turn, scores):
-                break
-
         return max(scores) if maximizer_target else min(scores)
-
-    def _we_are_losing(self, is_maximizer_target, scores):
-        return (is_maximizer_target and max(scores) == 1) or (
-            not is_maximizer_target and min(scores) == -1
-        )
 
     def _is_maximizers_turn(self) -> bool:
         return self.board.player == self.player

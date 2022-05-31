@@ -1,26 +1,32 @@
 from src.board import Board
-from src.constants import Result
-from src.utils import clear_terminal
+from src.constants import Result, Player
+from src.utils import clear_terminal, get_random_player
+from src.ai import Minimax
 
 
 class Game:
     board: Board
+    ai: Minimax
 
-    def __init__(self, board: Board) -> None:
+    def __init__(self, board: Board, ai: Minimax) -> None:
         self.board = board
+        self.ai = ai
 
     def setup(self) -> None:
         """Set's up the game initial game state.
         Should run only once and before the game_loop method.
         """
         clear_terminal()
-        # self.board._random_player_starts()
 
     def game_loop(self) -> None:
         """This function should execute every game tick."""
         self.board.render()
 
-        move = self.get_player_input()
+        if self.board.player is self.ai.player:
+            move = self.ai.make_best_move()
+        else:
+            move = self.get_player_input()
+
         self.board.make_move(move)
 
     def play(self) -> None:
@@ -35,20 +41,22 @@ class Game:
                 clear_terminal()
             except Exception as exc:
                 clear_terminal()
-                print(exc)
 
+        # Final render.
+        clear_terminal()
+        self.board.render()
         self.display_end()
 
     def display_end(self):
-        if self.board.fetch_game_result() == Result.X_WON:
-            print("X WON")
+        if self.board.fetch_game_result() == self.board.player:
+            print("The human won.")
             # TODO: save statistics in a file.
 
-        elif self.board.fetch_game_result() == Result.O_WON:
-            print("O WON")
+        elif self.board.fetch_game_result() == self.ai.player:
+            print("The AI won.")
             # TODO: save statistics in a file.
         else:
-            print("STALEMATE")
+            print("Stalemate")
             # TODO: save statistics in a file.
 
     def get_player_input(self) -> str:

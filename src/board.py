@@ -1,3 +1,4 @@
+import enum
 import random
 
 import numpy as np
@@ -14,10 +15,12 @@ class Board:
     game_result: Result
 
     def __init__(
-        self, state: np.ndarray = np.zeros((BOARD_ROWS, BOARD_COLS), dtype=int)
+        self,
+        player: Player,
+        state: np.ndarray = np.zeros((BOARD_ROWS, BOARD_COLS), dtype=int),
     ) -> None:
         self.state = np.copy(state)
-        self.player = Player.X  # By default the first player is X
+        self.player = player
         self.move_count = 0
         self.move_history = []
         self.game_result = None
@@ -114,7 +117,7 @@ class Board:
                 elif item == Player.O:
                     print("| O |", end=" ")
                 else:
-                    print("|  |", end=" ")
+                    print(f"| □ |", end=" ")
             print("")
 
     def is_game_over(self) -> bool:
@@ -164,7 +167,8 @@ class Board:
     def o_turn(self) -> None:
         self.player = Player.O
 
-    def _random_player_starts(self) -> None:
+    def _random_player_starts(self) -> Player:
         """Gets a random player to start the game."""
         players = [Player.X, Player.O]
         self.player = random.choise(players)
+        return self.player
