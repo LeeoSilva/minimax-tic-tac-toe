@@ -44,6 +44,9 @@ class Board:
         self.is_game_over()
 
     def move_contraint(self, move) -> None:
+        if move is None:
+            raise AttributeError("Invalid Move.")
+
         if self.is_game_over():
             raise AttributeError("Game is already over.")
 
@@ -52,6 +55,14 @@ class Board:
 
         if move not in range(0, 10):
             raise AttributeError(f"Move `{move}` is an Ilegal move!")
+
+    def get_winner(self) -> Player:
+        if self.fetch_game_result() is Result.X_WON:
+            return Player.X
+        elif self.fetch_game_result() is Result.O_WON:
+            return Player.O
+        else:
+            return None
 
     def get_available_moves(self) -> list:
         coords = np.where(self.state == Player.EMPTY)
