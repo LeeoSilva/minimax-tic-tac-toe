@@ -10,7 +10,7 @@ numpy = "^1.22.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
-black = {version = "^22.3.0", allow-prereleases = true}
+black = { version = "^22.3.0", allow-prereleases = true }
 
 [build-system]
 requires = ["poetry>=0.12"]

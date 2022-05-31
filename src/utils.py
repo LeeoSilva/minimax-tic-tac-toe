@@ -15,6 +15,10 @@ def convert_list_of_2d_indexes_to_1d_indexes(rows: int, cols: int):
     return indexes_1d
 
 
+def clear_terminal():
+    print("\033c")
+
+
 def convert_2d_index_to_1d_index(x: int, y: int) -> int:
     return x * BOARD_COLS + y
 

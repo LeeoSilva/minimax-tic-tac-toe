@@ -98,7 +98,12 @@ class Board:
     def render(self) -> None:
         for row in self.state:
             for item in row:
-                print(f"| {item} |", end=" ")
+                if item == Player.X:
+                    print("| X |", end=" ")
+                elif item == Player.O:
+                    print("| O |", end=" ")
+                else:
+                    print("|  |", end=" ")
             print("")
 
     def is_game_over(self) -> bool:
