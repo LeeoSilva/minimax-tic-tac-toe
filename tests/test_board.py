@@ -3,7 +3,7 @@ from src.board import Board, Player, Result
 
 
 def test_initial_state_of_board() -> None:
-    board = Board()
+    board = Board(Player.X)
 
     expected_board = np.zeros((3, 3))
 
@@ -20,7 +20,7 @@ def test_check_diagonal_for_win_x():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
 
     board.check_diagonal()
     assert board.fetch_game_result() == Result.X_WON
@@ -35,7 +35,7 @@ def test_check_diagonal_for_win_o():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
 
     board.check_diagonal()
     assert board.fetch_game_result() == Result.O_WON
@@ -50,7 +50,7 @@ def test_check_diagonal_for_no_winner():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
 
     board.check_diagonal()
     assert board.fetch_game_result() == None
@@ -65,7 +65,7 @@ def test_stalemate():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
     board.check_stalemate()
     assert board.fetch_game_result() == Result.STALEMATE
 
@@ -79,7 +79,7 @@ def test_check_anti_diagonal_for_win_x():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
 
     board.check_anti_diagonal()
     assert board.fetch_game_result() == Result.X_WON
@@ -94,7 +94,7 @@ def test_check_anti_diagonal_for_win_o():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
 
     board.check_anti_diagonal()
     assert board.fetch_game_result() == Result.O_WON
@@ -109,7 +109,7 @@ def test_check_anti_diagonal_for_no_winner():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
 
     board.check_anti_diagonal()
     assert board.fetch_game_result() == None
@@ -124,7 +124,7 @@ def test_check_horizontal_for_win_x():
         ]
     )
 
-    board = Board(state=board_state)
+    board = Board(Player.X, state=board_state)
     board.check_horizontal()
 
     assert board.fetch_game_result() == Result.X_WON
@@ -285,7 +285,7 @@ def test_make_move() -> None:
 
     assert board_state[0][2] == Player.X
     assert board.move_count == 1
-    assert board.player == Player.O
+    assert board.player_turn == Player.O
 
     assert len(board.move_history) == 1
     assert board.move_history[0] == 2
@@ -307,7 +307,7 @@ def test_full_game() -> None:
     board = Board()
 
     assert board.get_available_moves() == [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    assert board.player == Player.X
+    assert board.player_turn == Player.X
     assert board.move_count == 0
     assert board.move_history == []
     assert board.game_result is None
@@ -410,7 +410,7 @@ def test_undo_move() -> None:
     board = Board()
 
     assert board.get_available_moves() == [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    assert board.player == Player.X
+    assert board.player_turn == Player.X
     assert board.move_count == 0
     assert board.move_history == []
     assert board.game_result is None

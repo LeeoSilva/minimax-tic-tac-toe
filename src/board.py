@@ -9,18 +9,18 @@ from src.utils import get_max_move_count
 
 class Board:
     state: np.ndarray
-    player: Player
+    player_turn: Player
     move_count: int
     move_history: list
     game_result: Result
 
     def __init__(
         self,
-        player: Player,
+        player: Player = Player.X,
         state: np.ndarray = np.zeros((BOARD_ROWS, BOARD_COLS), dtype=int),
     ) -> None:
         self.state = np.copy(state)
-        self.player = player
+        self.player_turn = player
         self.move_count = 0
         self.move_history = []
         self.game_result = None
@@ -40,7 +40,7 @@ class Board:
     def make_move(self, move: int) -> None:
         self.move_contraint(move)
         coord = np.unravel_index(move, (BOARD_ROWS, BOARD_COLS))
-        self.state[coord] = int(self.player)
+        self.state[coord] = int(self.player_turn)
         self.move_count += 1
         self.move_history.append(move)
         self.next_player()
@@ -156,19 +156,19 @@ class Board:
 
     def next_player(self) -> None:
         """Handles next player logic."""
-        if self.player == Player.X:
+        if self.player_turn == Player.X:
             return self.o_turn()
 
         return self.x_turn()
 
     def x_turn(self) -> None:
-        self.player = Player.X
+        self.player_turn = Player.X
 
     def o_turn(self) -> None:
-        self.player = Player.O
+        self.player_turn = Player.O
 
     def _random_player_starts(self) -> Player:
         """Gets a random player to start the game."""
         players = [Player.X, Player.O]
-        self.player = random.choise(players)
-        return self.player
+        self.player_turn = random.choise(players)
+        return self.player_turn

@@ -22,7 +22,7 @@ class Game:
         """This function should execute every game tick."""
         self.board.render()
 
-        if self.board.player is self.ai.player:
+        if self.board.player_turn is self.ai.player:
             move = self.ai.make_best_move()
         else:
             move = self.get_player_input()
@@ -43,19 +43,19 @@ class Game:
                 clear_terminal()
 
         # Final render.
-        clear_terminal()
+        # clear_terminal()
         self.board.render()
         self.display_end()
 
     def display_end(self):
-        if self.board.fetch_game_result() == self.board.player:
+        if self.board.fetch_game_result() == self.board.player_turn:
             print("The human won.")
             # TODO: save statistics in a file.
 
         elif self.board.fetch_game_result() == self.ai.player:
             print("The AI won.")
             # TODO: save statistics in a file.
-        else:
+        elif self.board.fetch_game_result() == Result.STALEMATE:
             print("Stalemate")
             # TODO: save statistics in a file.
 
