@@ -1,14 +1,11 @@
 from math import inf
-from src.board import Board
-from src.constants import Player, Result
+from src.constants import Result
 
 
 class Minimax:
     def __init__(self, board, player) -> None:
         self.board = board
         self.player = player
-
-    # TODO: FIX THIS.
 
     def make_best_move(self):
         best_score = -inf
@@ -25,7 +22,6 @@ class Minimax:
                 best_score = score
                 best_move = move
 
-        # raise Exception(best_score, best_move)
         self.board.make_move(best_move)
 
     def minimax(self, is_maximizer_turn: bool, maximizer_target):
